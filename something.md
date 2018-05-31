@@ -60,7 +60,6 @@ Using block_read(), we read in the first block of the disk into a char buffer
 of `BLOCK_SIZE`, and then cast it to a pointer to a struct Superblock. We then 
 perform some error checking, making sure that the first block's signature is 
 indeed `ECS150`, and that the number of blocks and other information match up. 
-<br />
 We then allocate space for the FAT from the information now stored in the 
 superblock, and iterate through each block of the FAT, reading it into a 
 buffer and then transferring the buffer's contents into the fat array. Lastly, 
@@ -75,8 +74,7 @@ blind). <br />
 This function frees the data structures allocated in `fs_mount` and closes the 
 underlying disk file. We first check for open file descriptors (the data 
 structures we chose to implement file opening and file descriptors will be 
-explained later), making sure there are no currently open file descriptors. <br
- />
+explained later), making sure there are no currently open file descriptors.
 We then need to write the changed metadata back to the disk, using calls to `
 block_write` in order to store the superblock, FAT, and root directory back to 
 the virtual disk. We free the FAT, close the virtual disk name, and set our 
@@ -243,7 +241,6 @@ and extend if necessary, and then read the entire last block into a temporary
 buffer. We then write the rest of the content into the temporary buffer (from 
 the start of the block read) using `memcpy` and write the dirty block back to 
 the disk just as we did for the first block. Lastly we update the file offset. 
-<br />
 ##### allocate_new_data_block()
 This function extends the FAT chainmap of the passed in file descriptor, 
 allocating a new data block in the FAT to the file. After error checking, we 
@@ -299,5 +296,5 @@ thinking and a good pen on paper session to figure out the logic we wanted to
 use. <br />
 ## References
 * project4.html
-* [The GNU C Library](https://www.gnu.org/software/libc/manual/html_mono/libc.html)
+* The GNU C Library
 * Canvas and Piazza
