@@ -31,12 +31,12 @@ uint16_t | data_block_idx | Data block start index
 uint16_t | num_data_blocks | Amount of data blocks
 uint8_t | num_fat_blocks | Number of blocks for FAT
 uint8_t[4079] | padding | Unused/Padding
+
 We implement the signature as an array of 8 uint8_t entries, and the padding 
 as an array of size 4079 of `uint8_t` entries, in order to perfectly match the 
 specs, as well as add the attribute `packed`.
 ##### FAT
-The FAT or File Allocation Table is an array of  entries of type```uint16_t 
-*fat;```.
+The FAT or File Allocation Table is an array of entries of type `uint16_t`.
 ##### Root directory
 The root directory is an array of 128 entries, with each entry modeled as a 
 struct `Root_dir_entry`, with the members below:
