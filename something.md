@@ -6,7 +6,7 @@ The goal of this project is to create a basic file system. This file system
 takes inspiration from the FAT system architecture. <br />
 ## Design
 Our program utilizes the provided disk.c file. <br />
-The main components of the file system is located in `fs.c` <br />
+The main components of the file system is located in `fs.c` <br /> <br />
 The relevant and unprovided testers that we used are :
 * test.txt
 * test_fs_stat.sh
