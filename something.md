@@ -12,14 +12,12 @@ The relevant and unprovided testers that we used are :
 * test_fs_stat.sh
 * test_fs_read.sh
 * test_fs_write.sh
-
 ### fs.c
 Our file system consists of similar specifications a FAT system architecture 
 would have:
 * Superblock
 * FAT
 * Root directory
-
 ##### struct Superblock
 The Superblock is the first block of the file system, describing what the file 
 system is made up of. Our `Superblock` struct consists of 
@@ -33,15 +31,12 @@ uint16_t | data_block_idx | Data block start index
 uint16_t | num_data_blocks | Amount of data blocks
 uint8_t | num_fat_blocks | Number of blocks for FAT
 uint8_t[4079] | padding | Unused/Padding
-
 We implement the signature as an array of 8 uint8_t entries, and the padding 
 as an array of size 4079 of `uint8_t` entries, in order to perfectly match the 
 specs, as well as add the attribute `packed`.
-
 ##### FAT
 The FAT or File Allocation Table is an array of  entries of type```uint16_t 
 *fat;```.
-
 ##### Root directory
 The root directory is an array of 128 entries, with each entry modeled as a 
 struct `Root_dir_entry`, with the members below:
@@ -52,7 +47,6 @@ uint8_t[FS_FILENAME_LEN] | filename | Filename (including NULL character)
 uint32_t | file_size | Size of the file (in bytes)
 uint16_t | first_index | Index of the first data block
 uint8_t[10] | padding | Unused/Padding
-
 #### fs_mount()
 This function initializes and sets up the file system of this virtual disk. 
 Information is obtained and extracted according to the diskname that is passed 
@@ -105,8 +99,7 @@ We then create a new entry for the file (as a `struct Root_dir_entry`), use `
 memcpy` to set the `filename` member (again for simplicity and to emphasize 
 that the filename is not inherently typed). We also initialize the entry's 
 file size as 0, and set the first data block index as `FAT_EOC`. Lastly we set 
-the root directory's entry at the free index to be this newly created entry. <
-br />
+the root directory's entry at the free index to be this newly created entry.
 #### fs_delete()
 This function deletes a specified file from the file system. The root 
 directory is scanned until the filename with the matching name is found. To 
@@ -168,7 +161,6 @@ We split the reading process into three main parts:
 * first block
 * full blocks
 * last block
-
 ##### first block
 We first find the block number corresponding to the file's current offset by 
 simply dividing the file's offset by `BLOCK_SIZE` (to see how far down the FAT 
@@ -211,8 +203,7 @@ memory copying operations allowed us to address every single case in a much
 more general way. At the very end we update the file's offset. <br />
 #### fs_write()
 This function writes to a file, given a file descriptor id `fd`, the contents 
-to write into the file `buf`, and the number of bytes to be written `count`. <
-br />
+to write into the file `buf`, and the number of bytes to be written `count`. 
 This function uses a very similar procedure to `fs_read`, with the main 
 differences being that we are using `block_write` for all of our writing 
 operations, and that we need to check if the file needs to be extended before 
@@ -229,7 +220,6 @@ The process can be separated as 3 parts again:
 * first block
 * full blocks
 * last block
-
 ##### first block
 After calculating the index of the first block to write to, we extend the file 
 if needed using the helper function `allocate_new_data_block` (explained later)
@@ -290,8 +280,7 @@ write(). We then use fs_ref.x cat for both, to check if the content of the
 files match. <br />
 ## Difficulties
 Running our fs_read(), initially we started reading from elsewhere instead of 
-the data block. We thought block_read wasn't returning the right information. <
-br />
+the data block. We thought block_read wasn't returning the right information.
 We used the first data block index of a file as read from the root directory, 
 and called block_read with this index, which returned with `????`. This was 
 misleading because we didn't understand what was wrong with block_read(), 
